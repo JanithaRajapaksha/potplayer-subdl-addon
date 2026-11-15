@@ -1,6 +1,6 @@
 /*
     SubDL Subtitle Search Extension for Daum PotPlayer
-    Version: 2.0
+    Version: 1.0
     Description: Integrates SubDL (https://subdl.com) official API for searching,
                  ranking, downloading, and auto-loading subtitles in PotPlayer.
 */
@@ -23,7 +23,7 @@ string GetTitle()
 
 string GetVersion()
 {
-    return "2.0";
+    return "1.0";
 }
 
 string GetDesc()
