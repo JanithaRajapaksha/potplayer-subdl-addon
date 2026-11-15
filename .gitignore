@@ -1,0 +1,19 @@
+# Temporary and backup files
+*.bak
+*.tmp
+*.log
+test_api.ps1
+
+# Windows thumbnail and desktop cache
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# OS metadata
+.DS_Store
+
+# Editor / IDE configuration
+.vscode/
+.idea/
+*.swp
+*~
