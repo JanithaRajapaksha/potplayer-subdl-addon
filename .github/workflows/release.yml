@@ -1,0 +1,45 @@
+name: Package Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Create Release Archive
+        shell: pwsh
+        run: |
+          $releaseDir = "PotPlayer-SubDL-Addon"
+          New-Item -ItemType Directory -Path $releaseDir -Force
+
+          Copy-Item "SubtitleSearch - SubDL.as" "$releaseDir\"
+          Copy-Item "SubtitleSearch - SubDL.ico" "$releaseDir\"
+          Copy-Item "install.bat" "$releaseDir\"
+          Copy-Item "install.ps1" "$releaseDir\"
+          Copy-Item "uninstall.bat" "$releaseDir\"
+          Copy-Item "uninstall.ps1" "$releaseDir\"
+          Copy-Item "README.md" "$releaseDir\"
+          Copy-Item "LICENSE" "$releaseDir\"
+
+          Compress-Archive -Path "$releaseDir\*" -DestinationPath "PotPlayer-SubDL-Addon.zip" -Force
+          Write-Host "Created PotPlayer-SubDL-Addon.zip successfully."
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'release'
+        with:
+          files: PotPlayer-SubDL-Addon.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
